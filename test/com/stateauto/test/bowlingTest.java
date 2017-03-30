@@ -49,11 +49,30 @@ public class bowlingTest {
 
     @Test
     public void onePinPerRollTest() throws Exception {
-        String[] ret =  bg.onePinPerRoll();
+        String[] ret = bg.onePinPerRoll();
         assertTrue(ret.length == 10);
         assertEquals("20", ret[9]);
         printGame("One pin per roll test", ret);
+
+    }
+    @Test
+    public void threePinsThreeRolls() throws Exception {
+       String[] ret = bg.threePinsThreeRolls();
+
+       assertTrue(ret.length==2);
+       assertEquals("9", ret[1]);
+       printGame("Three Pins Three Rolls",ret);
     }
 
-    
+    @Test
+    public void fourPinsFiveRolls() throws Exception {
+        String [] ret = bg.fourPinsFiveRolls();
+        assertTrue(ret.length==3);
+        assertEquals("20", ret[2]);
+        printGame("Four Pins Five Rolls",ret);
+    }
+
+//    @Test
+//    public void fivePinsThree() throws Exception {
+//    }
 }

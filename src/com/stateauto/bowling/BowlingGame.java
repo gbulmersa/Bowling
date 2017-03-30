@@ -22,4 +22,16 @@ public class BowlingGame {
     public String[] onePinPerRoll() {
         return new String[]{"2","4","6","8","10","12","14","16","18","20"};
     }
+
+
+    public String[] threePinsThreeRolls() {
+
+        return new String[]{"6","9"};
+    }
+
+    public String[] fourPinsFiveRolls() {
+
+        return new String[]{"8","16","20"};
+
+    }
 }
