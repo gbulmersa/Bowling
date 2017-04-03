@@ -97,9 +97,35 @@ public class bowlingTest {
         assertTrue(ret.length==2);
         assertEquals("11", ret[0]);
         assertEquals("12", ret[1]);
+        printGame("Roll One Spare plus One",ret);
     }
 
-    //    @Test
-//    public void fivePinsThree() throws Exception {
-//    }
+    @Test  @Ignore
+    public void oneSpareTwoBalls() throws Exception {
+        bg.rollOneBall(3);
+        bg.rollOneBall(7);
+
+        bg.rollOneBall(1);
+        String[] ret = bg.rollOneBall(1);
+
+        assertTrue(ret.length==2);
+        assertEquals("11", ret[1]);
+        // assertEquals("13", ret[3]);
+        // printGame("one spare two balls",ret);
+    }
+
+    @Ignore
+    @Test
+    public void rollThreeSpares() throws Exception {
+        bg.rollOneBall(3);
+      bg.rollOneBall(7);
+   //     bg.rollOneBall(8);
+   //   bg.rollOneBall(2);
+//        bg.rollOneBall(5);
+//        bg.rollOneBall(5);
+        String[] ret =bg.rollOneBall(1);
+        assertTrue(ret.length==4);
+        assertEquals("45", ret[3]);
+        printGame("Three Spares and One",ret);
+    }
 }
