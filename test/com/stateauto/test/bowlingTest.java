@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -35,14 +36,16 @@ public class bowlingTest {
 
     @Test
     public void rollOneGutterBallTest() throws Exception {
-        String ret[] = bg.rollOneBall(0);
+        bg.rollOneBall(0);
+        String[] ret = bg.score();
         assertEquals("0", ret[0]);
         printGame("Roll one gutter ball test",ret );
     }
 
     @Test
     public void rollAllGutterBallsTest() throws Exception {
-        String[] ret = bg.rollAllGutterBalls();
+        bg.rollAllGutterBalls();
+        String[] ret = bg.score();
         assertEquals(10, ret.length);
         assertEquals("0", ret[9]);
         printGame("All gutter balls test", ret);
@@ -50,7 +53,8 @@ public class bowlingTest {
 
     @Test
     public void onePinPerRollTest() throws Exception {
-        String[] ret = bg.onePinPerRoll();
+        bg.onePinPerRoll();
+        String[] ret = bg.score();
         assertTrue(ret.length == 10);
         assertEquals("20", ret[9]); // 2 points per frame * 10 frames
         printGame("One pin per roll test", ret);
@@ -59,7 +63,8 @@ public class bowlingTest {
 
     @Test
     public void threePinsThreeRolls() throws Exception {
-       String[] ret = bg.threePinsThreeRolls();
+       bg.threePinsThreeRolls();
+       String[] ret = bg.score();
 
        assertTrue(ret.length==2);
        assertEquals("9", ret[1]);
@@ -68,7 +73,8 @@ public class bowlingTest {
 
     @Test
     public void fourPinsFiveRolls() throws Exception {
-        String [] ret = bg.fourPinsFiveRolls();
+        bg.fourPinsFiveRolls();
+        String[] ret = bg.score();
         assertTrue(ret.length==3);
         assertEquals("20", ret[2]);
         printGame("Four Pins Five Rolls",ret);
@@ -76,15 +82,18 @@ public class bowlingTest {
 
     @Test
     public void rollOnlyOneBall() throws Exception {
-        String[] ret = bg.rollOneBall(5);
+        bg.rollOneBall(5);
+        String[] ret = bg.score();
         assertTrue(ret.length==1);
         assertEquals("5", ret[0]);
     }
 
     @Test
     public void rollOneSpare() throws Exception {
-        String[] temp = bg.rollOneBall(3);
-        String[] ret = bg.rollOneBall(7);
+        bg.rollOneBall(3);
+        bg.rollOneBall(7);
+        String[] ret = bg.score();
+        printGame("Roll One Spare plus One",ret);
         assertTrue(ret.length==1);
         assertEquals("10", ret[0]);
     }
@@ -93,14 +102,15 @@ public class bowlingTest {
     public void rollOneSparePlusBall() throws Exception {
         bg.rollOneBall(3);
         bg.rollOneBall(7);
-        String[] ret = bg.rollOneBall(1);
+        bg.rollOneBall(1);
+        String[] ret = bg.score();
         assertTrue(ret.length==2);
+        printGame("Roll One Spare plus One",ret);
         assertEquals("11", ret[0]);
         assertEquals("12", ret[1]);
-        printGame("Roll One Spare plus One",ret);
     }
 
-    @Test  @Ignore
+    @Test @Ignore
     public void oneSpareTwoBalls() throws Exception {
         bg.rollOneBall(3);
         bg.rollOneBall(7);
@@ -114,8 +124,7 @@ public class bowlingTest {
         // printGame("one spare two balls",ret);
     }
 
-    @Ignore
-    @Test
+    @Test @Ignore
     public void rollThreeSpares() throws Exception {
         bg.rollOneBall(3);
       bg.rollOneBall(7);

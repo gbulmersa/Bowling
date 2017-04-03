@@ -11,8 +11,9 @@ public class BowlingGame {
     // up to 10
     private int[] frames = new int[0];
 
-    public int score() {
-        return 0;
+    public String[] score() {
+        updateFrames();
+        return convertIntArrayToStringArray(frames);
     }
 
     public void roll() {
@@ -84,7 +85,12 @@ public class BowlingGame {
 
     public String[] fourPinsFiveRolls() {
 
-        return new String[]{"8","16","20"};
+        rollABall(4);
+        rollABall(4);
+        rollABall(4);
+        rollABall(4);
+        rollABall(4);
+        return convertIntArrayToStringArray(frames);
 
     }
 
@@ -93,16 +99,13 @@ public class BowlingGame {
         newRolls[newRolls.length-1] = pinsKnockedDown;
         rolls = newRolls;
 
-        // ron: continue to think about this
-        boolean isSpare = (!isNewFrame()) && (10-pinsKnockedDown) == frames[frames.length-1];
-
         updateFrames();
     }
 
     private void updateFrames() {
         // carry over from previous frame (if necessary)
         int previousFrameScore;
-        if (frames.length > 0) {
+        if (frames.length > 1) {
             previousFrameScore = frames[frames.length-1];
         } else {
             previousFrameScore = 0;
@@ -116,8 +119,9 @@ public class BowlingGame {
 
     // looks ahead if strike or spare occured
     private void computeFrames() {
-        int[] newFrames = new int[frames.length];
-        for (int i = 0; i < frames.length; i++) {
+        int newFramesLength = rolls.length/2 + rolls.length %2;
+        int[] newFrames = new int[newFramesLength ];
+        for (int i = 0; i < newFramesLength; i++) {
             int firstRollIndex = i*2;
             int secondRollIndex = firstRollIndex + 1;
             int firstRollScore = rolls[firstRollIndex];
@@ -127,7 +131,10 @@ public class BowlingGame {
                 boolean isSpare = firstRollScore + secondRollScore == 10;
                 int followingRollIndex = secondRollIndex + 1;
                 int followingRollScore = rolls.length>followingRollIndex ? rolls[followingRollIndex] : 0;
-                newFrames[i] = isSpare ? frames[i] += followingRollScore : frames[i];
+                int frameScore = i>0 ? (newFrames[i-1] + firstRollScore + secondRollScore) : (firstRollScore + secondRollScore);
+                frameScore += isSpare ? followingRollScore : 0;
+                newFrames[i] = frameScore;
+                // newFrames[i] = isSpare ? frameScore += followingRollScore : frameScore;
             } else if (isPreviousFrameSpare) {
                 int frameScore;
                 frameScore = newFrames[i-1] + firstRollScore + secondRollScore;
