@@ -109,16 +109,47 @@ public class BowlingGame {
         }
 
         addNewFrameIfNecessary();
+        // Add last roll to current new Frame
         frames[frames.length-1] = rolls[rolls.length-1] + previousFrameScore;
+        computeFrames();
     }
 
     // looks ahead if strike or spare occured
     private void computeFrames() {
-        
-        for (int i = 0; i < rolls.length; i++) {
-
+        int[] newFrames = new int[frames.length];
+        for (int i = 0; i < frames.length; i++) {
+            int firstRollIndex = i*2;
+            int secondRollIndex = firstRollIndex + 1;
+            int firstRollScore = rolls[firstRollIndex];
+            int secondRollScore = rolls.length>secondRollIndex ? rolls[secondRollIndex] : 0;
+            boolean isPreviousFrameSpare = i-1 >= 0 ? isFrameSpare(i-1) : false;
+            if (isFrameSpare(i)) {
+                boolean isSpare = firstRollScore + secondRollScore == 10;
+                int followingRollIndex = secondRollIndex + 1;
+                int followingRollScore = rolls.length>followingRollIndex ? rolls[followingRollIndex] : 0;
+                newFrames[i] = isSpare ? frames[i] += followingRollScore : frames[i];
+            } else if (isPreviousFrameSpare) {
+                int frameScore;
+                frameScore = newFrames[i-1] + firstRollScore + secondRollScore;
+                newFrames[i] = frameScore;
+            }
+            else {
+                int frameScore;
+                //If we're past the first frame we add in current frame score with previous frame score
+                frameScore = i>0 ? newFrames[i-1] + firstRollScore + secondRollScore : firstRollScore + secondRollScore;
+                newFrames[i] = frameScore;
+            }
         }
+        frames = newFrames;
     }
+
+    private boolean isFrameSpare(int frameNumber) {
+        int firstRollIndex = frameNumber*2;
+        int secondRollIndex = firstRollIndex + 1;
+        int firstRollScore = rolls[firstRollIndex];
+        int secondRollScore = rolls.length>secondRollIndex ? rolls[secondRollIndex] : 0;
+        return (firstRollScore + secondRollScore == 10);
+   }
 
     // returns 1 through 10, not zero indexed!
     private int computeFrameBasedOnRoll(int rollNumber) {

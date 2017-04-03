@@ -89,14 +89,14 @@ public class bowlingTest {
         assertEquals("10", ret[0]);
     }
 
-    @Test @Ignore
+    @Test
     public void rollOneSparePlusBall() throws Exception {
         bg.rollOneBall(3);
         bg.rollOneBall(7);
         String[] ret = bg.rollOneBall(1);
         assertTrue(ret.length==2);
         assertEquals("11", ret[0]);
-        // assertEquals("12", ret[1]);
+        assertEquals("12", ret[1]);
     }
 
     //    @Test
