@@ -43,7 +43,8 @@ public class bowlingTest {
     @Test
     public void rollAllGutterBallsTest() throws Exception {
         String[] ret = bg.rollAllGutterBalls();
-        assertTrue(ret.length == 10);
+        assertEquals(10, ret.length);
+        assertEquals("0", ret[9]);
         printGame("All gutter balls test", ret);
     }
 
@@ -51,10 +52,11 @@ public class bowlingTest {
     public void onePinPerRollTest() throws Exception {
         String[] ret = bg.onePinPerRoll();
         assertTrue(ret.length == 10);
-        assertEquals("20", ret[9]);
+        assertEquals("20", ret[9]); // 2 points per frame * 10 frames
         printGame("One pin per roll test", ret);
 
     }
+
     @Test
     public void threePinsThreeRolls() throws Exception {
        String[] ret = bg.threePinsThreeRolls();
@@ -72,7 +74,32 @@ public class bowlingTest {
         printGame("Four Pins Five Rolls",ret);
     }
 
-//    @Test
+    @Test
+    public void rollOnlyOneBall() throws Exception {
+        String[] ret = bg.rollOneBall(5);
+        assertTrue(ret.length==1);
+        assertEquals("5", ret[0]);
+    }
+
+    @Test
+    public void rollOneSpare() throws Exception {
+        String[] temp = bg.rollOneBall(3);
+        String[] ret = bg.rollOneBall(7);
+        assertTrue(ret.length==1);
+        assertEquals("10", ret[0]);
+    }
+
+    @Test @Ignore
+    public void rollOneSparePlusBall() throws Exception {
+        bg.rollOneBall(3);
+        bg.rollOneBall(7);
+        String[] ret = bg.rollOneBall(1);
+        assertTrue(ret.length==2);
+        assertEquals("11", ret[0]);
+        // assertEquals("12", ret[1]);
+    }
+
+    //    @Test
 //    public void fivePinsThree() throws Exception {
 //    }
 }
